@@ -14,42 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      diagnoses: {
+      diagnostics: {
         Row: {
-          confidence: string
+          ai_diagnosis: string | null
+          confidence_score: string | null
           created_at: string
-          device: string
-          estimated_price_max: number
-          estimated_price_min: number
-          hint: string | null
+          device_type: string | null
+          estimated_repair_cost_max: number | null
+          estimated_repair_cost_min: number | null
           id: string
+          image_url: string | null
           problems: Json
-          recommendation: string
-          repair_time: string
+          recommended_solution: string | null
+          repair_time: string | null
+          repair_urgency: string | null
+          user_id: string
         }
         Insert: {
-          confidence: string
+          ai_diagnosis?: string | null
+          confidence_score?: string | null
           created_at?: string
-          device: string
-          estimated_price_max: number
-          estimated_price_min: number
-          hint?: string | null
+          device_type?: string | null
+          estimated_repair_cost_max?: number | null
+          estimated_repair_cost_min?: number | null
           id?: string
+          image_url?: string | null
           problems?: Json
-          recommendation: string
-          repair_time: string
+          recommended_solution?: string | null
+          repair_time?: string | null
+          repair_urgency?: string | null
+          user_id: string
         }
         Update: {
-          confidence?: string
+          ai_diagnosis?: string | null
+          confidence_score?: string | null
           created_at?: string
-          device?: string
-          estimated_price_max?: number
-          estimated_price_min?: number
-          hint?: string | null
+          device_type?: string | null
+          estimated_repair_cost_max?: number | null
+          estimated_repair_cost_min?: number | null
           id?: string
+          image_url?: string | null
           problems?: Json
-          recommendation?: string
-          repair_time?: string
+          recommended_solution?: string | null
+          repair_time?: string | null
+          repair_urgency?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
         }
         Relationships: []
       }
