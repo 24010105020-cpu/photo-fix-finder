@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      diagnoses: {
+        Row: {
+          confidence: string
+          created_at: string
+          device: string
+          estimated_price_max: number
+          estimated_price_min: number
+          hint: string | null
+          id: string
+          problems: Json
+          recommendation: string
+          repair_time: string
+        }
+        Insert: {
+          confidence: string
+          created_at?: string
+          device: string
+          estimated_price_max: number
+          estimated_price_min: number
+          hint?: string | null
+          id?: string
+          problems?: Json
+          recommendation: string
+          repair_time: string
+        }
+        Update: {
+          confidence?: string
+          created_at?: string
+          device?: string
+          estimated_price_max?: number
+          estimated_price_min?: number
+          hint?: string | null
+          id?: string
+          problems?: Json
+          recommendation?: string
+          repair_time?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
