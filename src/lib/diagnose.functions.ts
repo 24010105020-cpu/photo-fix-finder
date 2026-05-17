@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 export const diagnoseDevice = createServerFn({ method: "POST" })
   .inputValidator((input: { imageDataUrl: string; deviceHint?: string }) => {
@@ -124,7 +125,7 @@ Be realistic with USD pricing based on typical third-party repair shop rates.`;
     }
 
     try {
-      return JSON.parse(toolCall.function.arguments) as {
+      const parsed = JSON.parse(toolCall.function.arguments) as {
         device: string;
         problems: Array<{
           name: string;
@@ -137,6 +138,22 @@ Be realistic with USD pricing based on typical third-party repair shop rates.`;
         confidence: "low" | "medium" | "high";
         recommendation: string;
       };
+
+      const { error: insertError } = await supabaseAdmin.from("diagnoses").insert({
+        device: parsed.device,
+        hint: data.deviceHint ?? null,
+        problems: parsed.problems,
+        estimated_price_min: parsed.estimated_price_usd.min,
+        estimated_price_max: parsed.estimated_price_usd.max,
+        repair_time: parsed.repair_time,
+        confidence: parsed.confidence,
+        recommendation: parsed.recommendation,
+      });
+      if (insertError) {
+        console.error("Failed to store diagnosis:", insertError);
+      }
+
+      return parsed;
     } catch (e) {
       console.error("Failed to parse tool args", e);
       throw new Error("Invalid diagnosis format. Please retry.");
